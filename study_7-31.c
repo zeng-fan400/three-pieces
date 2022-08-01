@@ -13,19 +13,54 @@ void menu()
 
 void game()
 {
-	char board[ROW][COL] = { 0 };//È«²¿¿Õ¸ñ
-	//³õÊ¼»¯ÆåÅÌ£¨Êı×é£©
+	char ret = 0;
+	char board[ROW][COL] = { 0 };//å…¨éƒ¨ç©ºæ ¼
+	//åˆå§‹åŒ–æ£‹ç›˜ï¼ˆæ•°ç»„ï¼‰
 	InitBoard(board, ROW, COL);
-	//´òÓ¡ÆåÅÌ
+	//æ‰“å°æ£‹ç›˜
 	DisplayBoard(board,ROW,COL);
+	//ä¸‹æ£‹
+	while (1)
+	{
+		//ç©å®¶ä¸‹æ£‹
+		PlayerMove(board, ROW, COL);
+		DisplayBoard(board, ROW, COL);
+		//åˆ¤æ–­ç©å®¶æ˜¯å¦èµ¢
+		ret = IsWin(board, ROW, COL);
+		if (ret != 'C')
+		{
+			break;
+		}
+		//ç”µè„‘ä¸‹æ£‹
+		ComputerMove(board, ROW, COL);
+		DisplayBoard(board, ROW, COL);
+		ret = IsWin(board, ROW, COL);
+		if (ret != 'C')
+		{
+			break;
+		}
+	}
+	if (ret == '*')
+	{
+		printf("ç©å®¶èµ¢\n");
+	}
+	else if (ret == '#')
+	{
+		printf("ç”µè„‘èµ¢\n");
+	}
+	else
+	{
+		printf("å¹³å±€\n");
+	}
 }
 void test() 
 {
 	int input = 0;
+	srand((unsigned int)time(NULL));
 	do
 	{
 		menu();
-		printf("ÇëÑ¡Ôñ>:");
+		printf("è¯·é€‰æ‹©>:");
 		scanf("%d", &input);
 		switch (input)
 		{
@@ -33,10 +68,10 @@ void test()
 			game();
 			break;
 		case 0:
-			printf("ÍË³öÓÎÏ·\n");
+			printf("é€€å‡ºæ¸¸æˆ\n");
 			break;
 		default:
-			printf("Ñ¡Ôñ´íÎó£¬ÇëÖØĞÂÑ¡Ôñ!\n");
+			printf("é€‰æ‹©é”™è¯¯ï¼Œè¯·é‡æ–°é€‰æ‹©!\n");
 		}
 	} while (input);
 }
